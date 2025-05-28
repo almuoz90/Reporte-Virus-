@@ -1,0 +1,339 @@
+\documentclass[twocolumn]{article}
+\usepackage{amsmath,amssymb,amsfonts,latexsym}
+\usepackage{enumerate}
+\usepackage{subcaption}
+\usepackage{xspace}
+\usepackage{epsf,picinpar}
+\usepackage{varioref}
+\usepackage{colortbl,multirow,hhline}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{colortbl,multirow,hhline}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{caption}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor}
+\usepackage{pifont}
+\usepackage{xcolor,colortbl}
+\usepackage{url}
+\usepackage{balance}
+\usepackage{graphicx, subfigure}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{framed}
+\usepackage{morefloats}
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{pdfpages}
+\usepackage{fancybox}
+\usepackage{amsmath}
+\usepackage{flushend}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\renewcommand{\ttdefault}{cmr}
+
+%\newcommand{\limit}[1]{\textcolor{red}{\noindent \ding{46}~Page limit:~#1}\\}
+\newcommand{\todo}[1]{\textcolor{blue}{\ding{46}~#1}} 
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\etc}{etc.\xspace}
+\newcommand{\etal}{\emph{et~al.}\xspace} 
+
+
+    
+\begin{document}
+
+\title{
+	\todo{Reporte de virus}
+}
+
+\maketitle
+
+\section{Introducción}
+El objetivo de este informe es presentar el modelo de virus artificial basado en la Hormiga de Langton, analizando cómo agentes simples pueden replicarse, adaptarse y estabilizarse en entornos simulados. El modelo se estructura en dos fases principales: la configuración del entorno por una \textit{hormiga base} y la interacción de un \textit{agente viral} con dicho entorno. Este estudio sirve como marco experimental para explorar principios de autoorganización y replicación en sistemas de vida artificial.
+
+\section{Modelo}\label{sec:related}
+
+\subsection{Descripción y Configuración del Modelo}
+
+\subsubsection{Hormiga Base}
+La hormiga base crea un entorno inicial estructurado al interactuar con una cuadrícula. Su movimiento y las reglas definidas por su ADN determinan el estado de las celdas que recorre, configurando así un "hospedador" sobre el cual la hormiga virus actuará posteriormente.
+
+\subsubsection{Hormiga Virus}
+El modelo introduce un agente secundario, denominado \textit{hormiga virus}, que interactúa con el entorno configurado por la \textit{hormiga base}. Este segundo agente es considerado un virus cuando cumple las siguientes condiciones:
+
+\begin{itemize}
+    \item Es capaz de propagarse en el entorno, siguiendo las reglas definidas por el patrón creado por la hormiga base.
+    \item Utiliza el entorno estructurado como base para generar patrones adicionales que representan su "supervivencia" en el sistema.
+    \item La propagación de la hormiga virus se caracteriza por la capacidad de replicar sus movimientos y alterar el estado de las celdas del entorno configurado.
+\end{itemize}
+
+En este modelo, \textit{vivir en el entorno} significa generar patrones en la cuadrícula. Estos patrones emergen como resultado de la interacción entre la hormiga virus y el entorno estructurado por la hormiga base, lo que refleja su habilidad para adaptarse y propagarse.
+
+\subsection{Algoritmos de Virus Artificiales}
+El modelo de virus artificial se desarrolla en dos fases principales:
+
+\begin{enumerate}
+    \item \textbf{Configuración de la Cuadrícula y Parámetros Iniciales} \\
+    La cuadrícula es una matriz de celdas, donde cada celda tiene un estado inicial (por ejemplo, un color que representa el estado de la celda). Se asignan secuencias de movimientos específicas para cada hormiga, donde cada movimiento es una instrucción simple: girar a la izquierda ("L") o a la derecha ("R") dependiendo del estado actual de la celda. La hormiga base se posiciona en el centro de la cuadrícula y comienza su secuencia de movimientos sobre las celdas para crear una configuración inicial.
+
+    \item \textbf{Primera Fase: ejecución de la Hormiga Base} \\
+    La hormiga base comienza a moverse sobre la cuadrícula siguiendo su secuencia de movimientos. La hormiga base se mueve según la configuración de su ADN, sigue esta secuencia hasta completar un número predeterminado de movimientos, creando así un entorno preconfigurado en la cuadrícula.
+
+    \item \textbf{Segunda Fase: ejecución de la Hormiga Virus} \\
+    Con la cuadrícula configurada por la hormiga base, la hormiga virus inicia su propio ciclo de movimientos, comenzando también en el centro de la cuadrícula. La hormiga virus sigue su secuencia determinada en su ADN. Durante esta fase, se calcula la entropía local de la cuadrícula en intervalos regulares, registrando cómo cambian los niveles de orden y desorden. Esto permite analizar el efecto del "virus" sobre el entorno inicial.
+
+    \item \textbf{Análisis de Resultados: detección de Patrones y Estabilización} \\
+    Tras completar ambas fases, se realiza un análisis de las fluctuaciones en la entropía, evaluando si la hormiga virus ha producido un patrón, estabilización rápida o desorden. Si se detectan patrones o estabilización, el sistema los registra como indicadores del comportamiento del virus artificial, reflejando que el entorno inicial configurado por la hormiga base influyó en la rapidez o el orden en la propagación del "virus."
+\end{enumerate}
+
+\section{Ejemplos de Agentes Virales}
+
+\subsection{Ejemplo: LRLR sobre la base LLLR}
+
+A continuación, exploramos ejemplos de hormigas que presentan características de agentes virales en entornos controlados y no controlados.
+
+En el primer caso, la base \textbf{LLLR} (Figura~\ref{fig:comparacion}a) establece un entorno de referencia al generar un camino unidireccional y estable tras 615 iteraciones. Esta configuración lineal simplifica el espacio de la cuadrícula, proporcionando un ambiente favorable para el desarrollo ordenado de patrones más complejos.
+
+En el segundo caso, la hormiga con el patrón \textbf{LRLR} sin base (Figura~\ref{fig:comparacion}b) muestra un comportamiento caótico y de alta entropía, dispersándose en todas direcciones y sin formar un camino claro durante las primeras 11,000 iteraciones. Hacia el final de las 13,000 iteraciones, la hormiga alcanza un estado de estabilización espontánea que sugiere la formación de un patrón periódico en el largo plazo. Este proceso desordenado y espontáneo es común en configuraciones sin base.
+
+Por último, en el tercer caso (Figura~\ref{fig:comparacion}c), la hormiga \textbf{LRLR} interactúa sobre la base \textbf{LLLR}. Aquí, la estabilización ocurre rápidamente en solo 3,000 iteraciones, lo cual es significativamente menor que en el escenario sin base. La estructura inicial generada por la base actúa como un facilitador del proceso de organización, reduciendo el tiempo de convergencia. Este comportamiento es comparable al de un "virus artificial", que, al encontrar un entorno propicio, aprovecha la infraestructura preexistente para estabilizarse de manera más eficiente y sostenida.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.2\textwidth]{reportTemplate/figures/lllr_615.png}
+    \caption{Configuración inicial de la base LLLR tras 615 iteraciones.}
+    \label{fig:lllr_615}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.2\textwidth]{reportTemplate/figures/lrlr_sin_base.png}
+    \caption{Hormiga LRLR sin base tras 13,000 iteraciones.}
+    \label{fig:lrlr_sin_base}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.2\textwidth]{reportTemplate/figures/lrlr_13000.png}
+    \caption{Hormiga LRLR sobre base LLLR tras 3,000 iteraciones.}
+    \label{fig:lrlr_13000}
+\end{figure}
+
+
+
+
+
+\subsection{Ejmplo:LRR sobre la base LLR}
+
+En este ejemplo se compara el comportamiento de la hormiga con el patrón \textbf{LRR} en dos escenarios: sin una base predefinida y sobre una base configurada con el patrón \textbf{LLR}. La comparación permite observar cómo la infraestructura inicial afecta la estabilización y propagación de los patrones.
+
+    \begin{figure}[h!]
+        \includegraphics[width=0.2\textwidth]{reportTemplate/figures/llr.png}
+        \caption{Configuración inicial de la base LLR tras 615 iteraciones.}
+        \label{fig:llr_615}
+    \end{figure}
+    \hfill
+    \begin{figure}[h!]
+        \includegraphics[width=0.2\textwidth]{reportTemplate/figures/lrr_sin_base.png}
+        \caption{Hormiga LRR sin base tras 100,000 iteraciones.}
+        \label{fig:lrr_no_base}
+    \end{figure}
+    \hfill
+    \begin{figure}[h!]
+        \includegraphics[width=0.2\textwidth]{reportTemplate/figures/lrr_con_base.png}
+        \caption{Hormiga LRR sobre base LLR tras 3,000 iteraciones.}
+        \label{fig:lrr_base_llr}
+    \end{figure}
+
+
+En el primer escenario (Figura~\ref{fig:llr_615}), la base \textbf{LLR} genera un camino unidireccional y estable tras 615 iteraciones. Este camino lineal simplifica el espacio de la cuadrícula, proporcionando una infraestructura organizada que facilita la estabilización de patrones más complejos.
+
+En el segundo escenario (Figura~\ref{fig:lrr_no_base}), la hormiga \textbf{LRR} opera sin una base predefinida. En este caso, su comportamiento es caótico, generando altos niveles de entropía y dispersándose sin formar un patrón claro incluso tras 100,000 iteraciones.
+
+Por último, en el tercer escenario (Figura~\ref{fig:lrr_base_llr}), la hormiga \textbf{LRR} interactúa con la base \textbf{LLR}. Aquí, la estabilización ocurre rápidamente en solo 3,000 iteraciones, lo que demuestra cómo una infraestructura inicial organizada puede facilitar la convergencia hacia patrones estables. Este comportamiento es comparable al de un "virus artificial", que aprovecha la infraestructura preexistente para establecerse de manera eficiente y sostenida.
+\section{Aumento de Escala: Activación de Múltiples Hormigas Virus}
+
+En este experimento, exploramos cómo se comporta un sistema con cuatro hormigas virus interactuando secuencialmente. Cada hormiga activa opera directamente sobre el camino generado por las anteriores, lo que amplifica la complejidad del sistema y permite observar la interacción acumulativa.
+
+\subsection{Descripción del Proceso}
+El sistema comienza con la activación de la primera hormiga virus, que genera un patrón lineal estable sobre la base inicial. Este patrón sirve como infraestructura para la siguiente hormiga, que actúa directamente sobre el camino creado y lo amplía con su propio comportamiento. A medida que se activan las hormigas subsecuentes, cada una interactúa con el entorno acumulado, generando patrones cada vez más complejos.
+
+\subsection{Resultados Observados}
+Las figuras a continuación muestran los patrones generados por cada una de las hormigas virus en su activación:
+\begin{itemize}
+    \item \textbf{Hormiga Virus 1}: Genera un patrón lineal básico que sirve como base inicial (Figura~\ref{fig:virus1}).
+    \item \textbf{Hormiga Virus 2}: Actúa sobre el camino de la Hormiga Virus 1, generando bifurcaciones en el patrón (Figura~\ref{fig:virus2}).
+    \item \textbf{Hormiga Virus 3}: Amplifica las bifurcaciones y comienza a generar patrones caóticos y de alta entropía (Figura~\ref{fig:virus3}).
+    \item \textbf{Hormiga Virus 4}: Combina los patrones acumulados en un entorno estructuralmente complejo con regiones organizadas y caóticas (Figura~\ref{fig:virus4}).
+\end{itemize}
+
+
+\subsection{Análisis e Implicaciones}
+Este experimento demuestra cómo un sistema estructurado puede amplificar la complejidad a través de interacciones acumulativas entre agentes. Cada hormiga actúa sobre el camino previo, lo que permite observar patrones emergentes y dinámicas virales que reflejan comportamientos de replicación y propagación.
+
+En futuras investigaciones, sería interesante explorar cómo varían los patrones al modificar el tiempo de activación entre hormigas o cambiar las reglas del sistema base. 
+
+\subsection{Figuras de Activación}
+
+
+\begin{figure}[h]
+  \centering
+  \subfigure[Patrón generado por la Hormiga Virus 1.]{%
+    \includegraphics[width=0.2\textwidth]{virus1.png}%
+    \label{fig:virus1}%
+  }\quad
+  \subfigure[Patrón generado por la Hormiga Virus 2 sobre el camino de la Hormiga Virus 1.]{%
+    \includegraphics[width=0.2\textwidth]{virus2.png}%
+    \label{fig:virus2}%
+  }\\[1em]
+  \subfigure[Patrón generado por la Hormiga Virus 3 sobre los caminos acumulados.]{%
+    \includegraphics[width=0.2\textwidth]{virus3.png}%
+    \label{fig:virus3}%
+  }\quad
+  \subfigure[Patrón generado por la Hormiga Virus 4, combinando los patrones acumulados.]{%
+    \includegraphics[width=0.2\textwidth]{virus4.png}%
+    \label{fig:virus4}%
+  }
+
+  \caption{Patrones generados sucesivamente por las cuatro variantes de la Hormiga Virus.}
+  \label{fig:virus_all}
+\end{figure}
+
+
+\section{Metodología y Configuración Experimental}
+
+Para llevar a cabo este trabajo, utilizamos la supercomputadora \textit{Xiuhcoatl} del CINVESTAV, la cual permitió realizar cálculos intensivos mediante procesamiento paralelo. Diseñamos un experimento en el que cada procesador ejecutó una simulación de un posible virus, seleccionado de entre las hormigas que no se estabilizaron en experimentos previos con configuraciones de hasta 12 colores.
+
+Escogimos la base configurada en el patrón RR...RL porque, tras un piloto inicial con varias configuraciones, esta resultó ser el mejor candidato. En la mayoría de los ejemplos del piloto se lograron observar comportamientos similares a los de un virus. Esto permitió utilizar esta configuración como un entorno estructurado que favorece la interacción con agentes virales.
+
+Cada posible virus interactuaba con la hormiga base configurada en este patrón, cuya longitud de ADN variaba según el número de colores del virus. Las iteraciones de la hormiga base dependían del tamaño inicial de la matriz; para ello, consideramos matrices de tamaño entre 1000 y 1150, incrementando 10 unidades en cada caso. La hormiga base se detenía automáticamente al llegar a 4 celdas del borde de la matriz, generando un entorno estructurado sobre el cual los virus podían interactuar.
+
+Las hormigas seleccionadas para actuar como virus fueron aquellas que no lograron estabilizarse en una iteración de hasta 100,000,000. En este experimento, diseñamos 16 programas que exploraron configuraciones de hormigas desde 3 hasta 9 colores, limitándonos a hormigas que comenzaban en la dirección R, ya que aquellas que iniciaban con L no producían resultados similares. Cada programa evaluó 32 hormigas, identificando las que no se estabilizaban; estas se ejecutaron sobre los 15 tamaños de hormiga base especificados, en simulaciones de hasta 10 millones de iteraciones. En total, se exploraron 4800 configuraciones posibles.
+
+La supercomputadora \textit{Xiuhcoatl} proporcionó los recursos necesarios para este trabajo, utilizando 16 servidores con 32 procesadores cada uno y 64GB de RAM, lo que suma un total de 512 procesadores y 1024GB de RAM. Este trabajo se realizó durante una semana, con un tiempo de procesador total de 22991946,7764 segundos.
+
+
+\section{Ajuste Dinámico de la Entropía Local}
+
+A continuación se describe el flujo de cálculo y las gráficas resultantes, que ilustran cómo evoluciona y se regula la entropía en las nueve subventanas de la vecindad de la hormiga de Langton.
+
+\subsection{Configuración de la Simulación}
+
+\begin{itemize}
+  \item \textbf{Número de colores:} \(m\) (estados \(\{0,1,\dots,m-1\}\)).  
+  \item \textbf{Iteraciones:} \(\texttt{Max}\) pasos de la hormiga.  
+  \item \textbf{Ventana local:} tamaño 
+    \[
+      W = 3 \times s,
+    \]
+    donde \(s\) es el lado de cada subventana. Se subdivide en una malla \(3\times3\) de bloques de \(s\times s\).  
+  \item \textbf{Cuadrícula inicial:} matriz de \(n\times n\) ceros; la hormiga se ubica en el centro con dirección inicial, por ejemplo, hacia arriba \(\bigl[-1,0\bigr]\).  
+  \item \textbf{Expansión dinámica:} cuando la hormiga queda a menos de \(W/2\) celdas de cualquiera de los bordes, se amplía la cuadrícula añadiendo una franja de \(W\) celdas alrededor y se recenteriza la posición de la hormiga, garantizando que la ventana de cálculo de entropías nunca salga del arreglo.
+\end{itemize}
+\subsection{Cálculo de la Entropía Local}
+En cada paso \(t\):
+\begin{enumerate}
+  \item Extraer un parche \(W\times W\) centrado en la hormiga y subdividirlo en \(3\times3\) subventanas.
+  \item Para cada subventana \(k\), calcular la entropía de Shannon:
+    \[
+      H_k(t) = -\sum_{i:\,p_i>0} p_i \log_2 p_i.
+    \]
+  \item Registrar las dos métricas:
+    \[
+      \max_{1\le k\le9}H_k(t)
+      \quad\text{y}\quad
+      \max_{k\neq5}\bigl|H_k(t) - H_5(t)\bigr|.
+    \]
+\end{enumerate}
+\subsection{Ejemplos}
+
+\paragraph{Ejemplo 1 (Configuración RL)}
+Configuración usada en las Figuras~\ref{fig:entropias_locales} y~\ref{fig:max_vs_diff}:
+\begin{itemize}
+  \item \(m=2\) colores (estados 0 y 1). 
+  \item Reglas de giro: RL.  
+  \item \(\texttt{Max}=20000\) iteraciones.  
+  \item Ventana local \(W=3\times35=105\), subdividida en subventanas de \(35\times35\).  
+  \item Cuadrícula inicial \(200\times200\) ceros; hormiga en el centro con dirección inicial hacia arriba.  
+  \item Expansión dinámica al acercarse a menos de \(W/2=52\) celdas del borde.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{fig_entropias_locales.png}
+  \caption{Evolución temporal de las entropías locales \(H_k(t)\) para las nueve subventanas (Ejemplo 1).}
+  \label{fig:entropias_locales}
+\end{figure}
+
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{fig_max_vs_diff.png}
+  \caption{Entropía máxima y máxima diferencia \(|\Delta H|\) vs centro}
+  \label{fig:max_vs_diff}
+\end{figure}
+\paragraph{Ejemplo 2 (Configuración RRL)}
+En este ejemplo variamos los parámetros para ilustrar el efecto de más colores y ventana diferente:
+\begin{itemize}
+  \item \(m=3\) colores (estados 0, 1 y 2).  
+  \item \(\texttt{Max}=10000\) iteraciones.  
+  \item Ventana local \(W=3\times25=75\), subdividida en subventanas de \(25\times25\).  
+  \item Cuadrícula inicial \(250\times250\) ceros; hormiga en el centro con dirección aleatoria.  
+  \item Expansión dinámica al acercarse a menos de \(W/2=37\) celdas del borde.
+\end{itemize}
+
+
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{ejemplo2.png}
+  \caption{Evolución de las entropías locales \(H_k(t)\) para \(m=3\).}
+  \label{fig:entropias_locales_m3}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{ejemplo21.png}
+  \caption{Entropía máxima y máxima diferencia \(|\Delta H|\) vs centro para \(m=3\).}
+  \label{fig:max_vs_diff_m3}
+\end{figure}
+
+\section{Resultados Obtenidos}
+
+Siguiendo nuestra definición de estabilización, logramos identificar un total de $1626$ virus y $540$ tiempos de estabilización distintos. La cantidad de virus detectados por cada color de ADN se detalla en el Cuadro \ref{tab:TB1}. Estos resultados sugieren una dependencia exponencial entre la cantidad de colores en el ADN y el número de virus, como se observa en la Figura \ref{fig:SLP}. Esta relación nos permite vislumbrar cómo un entorno estructurado puede amplificar comportamientos replicativos en estos agentes, logrando estabilizaciones aceleradas que imitan el comportamiento viral teorizado.
+
+Los datos recopilados pueden consultarse en el siguiente enlace: 
+\href{https://github.com/almuoz90/hormiga1/tree/e0f04899c7bebcd6a5a330093a3246662f58e2a8/Parasitos}{GitHub - Virus}
+
+\begin{table}[h!]
+\centering
+\resizebox{8cm}{!} {
+\begin{tabular}{rr|r|r}
+  \hline
+ & \textbf{Colors} & \textbf{Amount of virus (AV)} & \textbf{Log\_AV} \\ 
+  \hline
+& 0 & 0 &  \\ 
+& 4 & 30 & 1.48 \\ 
+& 5 & 60 & 1.78 \\ 
+& 6 & 106 & 2.02 \\ 
+& 7 & 217 & 2.34 \\ 
+& 8 & 428 & 2.63 \\ 
+& 9 & 785 & 2.89 \\ 
+   \hline
+\end{tabular}
+}
+ \caption{Cantidad de virus por cada color de ADN}
+  \label{tab:TB1}
+\end{table}
+
+ \begin{figure}[h!]
+        \includegraphics[width=0.5\textwidth]{reportTemplate/figures/SWPL.png}
+  \caption{Relación entre el número de colores en el ADN y la cantidad de virus (Log\_AV).}
+  \label{fig:SLP}
+\end{figure}
+
+\end{document}
